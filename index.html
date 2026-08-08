@@ -1,0 +1,636 @@
+<!DOCTYPE html> 
+ <html lang="es"> 
+ <head> 
+     <meta charset="UTF-8"> 
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+     <title>Quinters Airlines - Agencia de Viajes</title> 
+     <style> 
+         :root { 
+             --primary-blue: #0b4b8a; 
+             --primary-orange: #d98818; 
+             --light-bg: #f4f7f9; 
+             --text-dark: #333333; 
+             --white: #ffffff; 
+         } 
+  
+         * { 
+             margin: 0; 
+             padding: 0; 
+             box-sizing: border-box; 
+             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+             scroll-behavior: smooth; 
+         } 
+  
+         body { 
+             background-color: var(--light-bg); 
+             color: var(--text-dark); 
+             line-height: 1.6; 
+         } 
+  
+         /* Top Bar RNT */ 
+         .top-bar { 
+             background-color: var(--primary-blue); 
+             color: var(--white); 
+             text-align: center; 
+             padding: 5px 0; 
+             font-size: 0.85rem; 
+             font-weight: 600; 
+             letter-spacing: 1px; 
+             border-bottom: 1px solid rgba(255,255,255,0.1); 
+             position: sticky; 
+             top: 0; 
+             z-index: 1002; 
+         } 
+  
+         /* Header & Navigation */ 
+         header { 
+             background-color: var(--white); 
+             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+             position: sticky; 
+             top: 32px; /* Altura aproximada de la top-bar */ 
+             z-index: 1001; 
+             padding: 10px 5%; 
+             display: flex; 
+             justify-content: space-between; 
+             align-items: center; 
+         } 
+  
+         .logo img { 
+             max-height: 80px; 
+         } 
+  
+         nav ul { 
+             list-style: none; 
+             display: flex; 
+             gap: 20px; 
+         } 
+  
+         nav a { 
+             text-decoration: none; 
+             color: var(--primary-blue); 
+             font-weight: 600; 
+             font-size: 1.1rem; 
+             transition: color 0.3s; 
+         } 
+  
+         nav a:hover { 
+             color: var(--primary-orange); 
+         } 
+  
+         /* Hero Section */ 
+         .hero { 
+             text-align: center; 
+             padding: 120px 20px; 
+             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=beautiful%20tropical%20beach%20with%20palm%20trees%2C%20white%20sand%2C%20crystal%20clear%20turquoise%20water%2C%20sunny%20sky%2C%20aerial%20view%2C%20travel%20concept%2C%20high%20quality%20photography&image_size=landscape_16_9'); 
+             background-size: cover; 
+             background-position: center; 
+             background-attachment: fixed; 
+             color: var(--white); 
+         } 
+  
+         .hero h1 { 
+             color: var(--white); 
+             font-size: 4rem; 
+             margin-bottom: 15px; 
+             text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+         } 
+  
+         .hero p { 
+             color: var(--primary-orange); 
+             font-size: 1.6rem; 
+             font-weight: 600; 
+             margin-bottom: 40px; 
+             text-shadow: 1px 1px 2px rgba(0,0,0,0.8); 
+         } 
+  
+         .cta-button { 
+             display: inline-block; 
+             background-color: var(--primary-orange); 
+             color: var(--white); 
+             padding: 15px 35px; 
+             text-decoration: none; 
+             border-radius: 30px; 
+             font-size: 1.2rem; 
+             font-weight: bold; 
+             box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+             transition: all 0.3s ease; 
+         } 
+  
+         .cta-button:hover { 
+             transform: translateY(-3px); 
+             background-color: #c07714; 
+             box-shadow: 0 6px 12px rgba(0,0,0,0.2); 
+         } 
+  
+         /* Sections General */ 
+         section { 
+             padding: 80px 5%; 
+         } 
+  
+         h2.section-title { 
+             text-align: center; 
+             color: var(--primary-blue); 
+             font-size: 2.5rem; 
+             margin-bottom: 50px; 
+             position: relative; 
+         } 
+          
+         h2.section-title::after { 
+             content: ''; 
+             width: 80px; 
+             height: 4px; 
+             background-color: var(--primary-orange); 
+             display: block; 
+             margin: 15px auto 0; 
+         } 
+  
+         /* Grid Layouts */ 
+         .grid-container { 
+             display: grid; 
+             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+             gap: 30px; 
+             margin-bottom: 40px; 
+         } 
+  
+         .card { 
+             background-color: var(--white); 
+             border-radius: 15px; 
+             overflow: hidden; 
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+             transition: transform 0.3s ease; 
+             display: flex; 
+             flex-direction: column; 
+         } 
+  
+         .card:hover { 
+             transform: translateY(-10px); 
+         } 
+  
+         .card-img { 
+             width: 100%; 
+             height: 200px; 
+             object-fit: cover; 
+         } 
+  
+         .card-content { 
+             padding: 20px; 
+             text-align: center; 
+             flex-grow: 1; 
+             display: flex; 
+             flex-direction: column; 
+             justify-content: space-between; 
+         } 
+  
+         .card-content h3 { 
+             color: var(--primary-blue); 
+             margin-bottom: 10px; 
+             font-size: 1.4rem; 
+         } 
+  
+         .card-content p { 
+             font-size: 0.95rem; 
+             color: #666; 
+             margin-bottom: 15px; 
+         } 
+  
+         .btn-small { 
+             display: inline-block; 
+             padding: 8px 20px; 
+             background-color: var(--primary-blue); 
+             color: var(--white); 
+             text-decoration: none; 
+             border-radius: 20px; 
+             font-size: 0.9rem; 
+             font-weight: 600; 
+             transition: background 0.3s; 
+         } 
+  
+         .btn-small:hover { 
+             background-color: var(--primary-orange); 
+         } 
+  
+         /* Services Grid Specific */ 
+         .services-grid { 
+             display: grid; 
+             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+             gap: 20px; 
+         } 
+  
+         .service-card { 
+             background-color: var(--white); 
+             padding: 30px; 
+             border-radius: 15px; 
+             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+             text-align: center; 
+             border-top: 5px solid var(--primary-blue); 
+             transition: all 0.3s ease; 
+         } 
+  
+         .service-card:hover { 
+             transform: scale(1.05); 
+             border-top-color: var(--primary-orange); 
+         } 
+  
+         .service-icon { 
+             font-size: 3rem; 
+             margin-bottom: 20px; 
+         } 
+  
+         .service-card h3 { 
+             color: var(--primary-blue); 
+             margin-bottom: 15px; 
+         } 
+  
+         /* Destinations Subtitles */ 
+         .destinations-subtitle { 
+             color: var(--primary-orange); 
+             font-size: 1.8rem; 
+             margin: 40px 0 25px; 
+             text-align: left; 
+             border-left: 5px solid var(--primary-orange); 
+             padding-left: 15px; 
+         } 
+  
+         /* Europe Thumbnails Style */ 
+         .europe-grid { 
+             display: grid; 
+             grid-template-columns: repeat(2, 1fr); 
+             gap: 5px; 
+             padding: 10px; 
+         } 
+  
+         .europe-grid img { 
+             width: 100%; 
+             height: 80px; 
+             object-fit: cover; 
+             border-radius: 5px; 
+         } 
+  
+         /* Contact Section */ 
+         .contact-container { 
+             display: flex; 
+             flex-wrap: wrap; 
+             gap: 40px; 
+             background-color: var(--white); 
+             padding: 40px; 
+             border-radius: 10px; 
+             box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+             justify-content: center; 
+             align-items: center; 
+         } 
+  
+         .contact-info { 
+             flex: 1; 
+             min-width: 300px; 
+         } 
+  
+         .contact-info h3 { 
+             color: var(--primary-blue); 
+             font-size: 1.8rem; 
+             margin-bottom: 5px; 
+         } 
+          
+         .contact-info h4 { 
+             color: var(--primary-orange); 
+             font-size: 1.1rem; 
+             margin-bottom: 20px; 
+             font-weight: 500; 
+         } 
+  
+         .contact-details p { 
+             font-size: 1.1rem; 
+             margin-bottom: 15px; 
+             display: flex; 
+             align-items: center; 
+             gap: 10px; 
+         } 
+  
+         .contact-card img { 
+             max-width: 100%; 
+             height: auto; 
+             border-radius: 10px; 
+             box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+         } 
+  
+         /* Footer */ 
+         footer { 
+             background-color: var(--primary-blue); 
+             color: var(--white); 
+             text-align: center; 
+             padding: 30px 20px; 
+             margin-top: 40px; 
+         } 
+  
+         .developer-credits { 
+             margin-top: 15px; 
+             font-size: 0.85rem; 
+             opacity: 0.7; 
+             border-top: 1px solid rgba(255,255,255,0.1); 
+             padding-top: 15px; 
+         } 
+  
+         .developer-credits a { 
+             color: var(--white); 
+             text-decoration: none; 
+             font-weight: 600; 
+             transition: opacity 0.3s; 
+         } 
+  
+         .developer-credits a:hover { 
+             opacity: 1; 
+             text-decoration: underline; 
+         } 
+  
+         @media (max-width: 768px) { 
+             nav ul { 
+                 display: none; 
+             } 
+             .contact-container { 
+                 flex-direction: column; 
+                 text-align: center; 
+             } 
+             .contact-details p { 
+                 justify-content: center; 
+             } 
+         } 
+     </style> 
+ </head> 
+ <body> 
+  
+     <div class="top-bar"> 
+         REGISTRO NACIONAL DE TURISMO (RNT) NO 293994 
+     </div> 
+  
+     <!-- Header --> 
+     <header> 
+         <div class="logo"> 
+             <img src="image.png" alt="Quinters Airlines Logo"> 
+         </div> 
+         <nav> 
+             <ul> 
+                 <li><a href="#inicio">Inicio</a></li> 
+                 <li><a href="#servicios">Servicios</a></li> 
+                 <li><a href="#destinos">Destinos</a></li> 
+                 <li><a href="#cruceros">Cruceros</a></li> 
+                 <li><a href="#contacto">Contacto</a></li> 
+             </ul> 
+         </nav> 
+     </header> 
+  
+     <!-- Hero --> 
+     <section id="inicio" class="hero"> 
+         <h1>Quinters Airlines</h1> 
+         <p>Viaja, descubre y vive experiencias inolvidables</p> 
+         <a href="https://wa.me/573137634998" target="_blank" class="cta-button">¡Cotiza tu viaje ahora!</a> 
+     </section> 
+  
+     <!-- Servicios --> 
+     <section id="servicios"> 
+         <h2 class="section-title">Nuestros Servicios</h2> 
+         <div class="services-grid"> 
+             <div class="service-card"> 
+                 <div class="service-icon">✈️</div> 
+                 <h3>Tiquetes</h3> 
+                 <p>Nacionales e internacionales con las mejores tarifas y múltiples destinos.</p> 
+             </div> 
+             <div class="service-card"> 
+                 <div class="service-icon">🏨</div> 
+                 <h3>Hoteles</h3> 
+                 <p>Encuentra el alojamiento ideal con las mejores opciones para ti.</p> 
+             </div> 
+             <div class="service-card"> 
+                 <div class="service-icon">🌴</div> 
+                 <h3>Paquetes Turísticos</h3> 
+                 <p>Planes diseñados para que vivas experiencias únicas e inolvidables.</p> 
+             </div> 
+             <div class="service-card"> 
+                 <div class="service-icon">🚢</div> 
+                 <h3>Cruceros</h3> 
+                 <p>Vive unas vacaciones únicas y de lujo en alta mar.</p> 
+             </div> 
+             <div class="service-card"> 
+                 <div class="service-icon">🛡️</div> 
+                 <h3>Asistencia al Viajero</h3> 
+                 <p>Viaja seguro y tranquilo con la mejor cobertura en tu destino.</p> 
+             </div> 
+             <div class="service-card"> 
+                 <div class="service-icon">🚗</div> 
+                 <h3>Alquiler de Vehículos</h3> 
+                 <p>Movilidad y total comodidad en tu lugar de destino.</p> 
+             </div> 
+         </div> 
+     </section> 
+  
+     <!-- Destinos --> 
+     <section id="destinos"> 
+         <h2 class="section-title">Destinos Destacados</h2> 
+          
+         <h3 class="destinations-subtitle">Destinos Nacionales</h3> 
+         <div class="grid-container"> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Cartagena%20Colombia%20Old%20City%20walls%2C%20colorful%20colonial%20buildings%2C%20flowers%2C%20ocean%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Cartagena" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Cartagena</h3> 
+                     <p>Historia, murallas y el encanto colonial a orillas del mar Caribe.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Eje%20Cafetero%20Colombia%20coffee%20farm%2C%20green%20mountains%2C%20wax%20palms%20Cocora%20Valley%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Eje Cafetero" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Eje Cafetero</h3> 
+                     <p>Paisajes verdes, aroma a café y la majestuosidad de las palmas de cera.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Cobeñas%20Colombia%20beach%2C%20calm%20sea%2C%20palm%20trees%2C%20sunset%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Cobeñas" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Cobeñas</h3> 
+                     <p>Playas tranquilas y atardeceres inolvidables en el Golfo de Morrosquillo.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Medellin%20Colombia%20cityscape%2C%20mountains%2C%20modern%20buildings%2C%20spring%20weather%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Medellín" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Medellín</h3> 
+                     <p>La ciudad de la eterna primavera, cultura, innovación y tradición.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=La%20Guajira%20Colombia%20desert%20meeting%20the%20ocean%2C%20orange%20dunes%2C%20blue%20sea%2C%20sunny%20day%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="La Guajira" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>La Guajira</h3> 
+                     <p>Donde el desierto se encuentra con el mar Caribe en un paisaje mágico.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=San%20Andres%20Island%20Colombia%2C%20seven%20colored%20sea%2C%20palm%20trees%2C%20white%20sand%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="San Andrés" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>San Andrés</h3> 
+                     <p>El mar de los siete colores te espera en este paraíso caribeño.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Santa%20Marta%20Colombia%20Tayrona%20Park%2C%20jungle%20meeting%20the%20beach%2C%20crystal%20clear%20water%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Santa Marta" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Santa Marta</h3> 
+                     <p>La magia de tenerlo todo: sierra nevada, selva y las mejores playas.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Barichara%20Santander%20Colombia%20colonial%20town%2C%20white%20stone%20houses%2C%20mountains%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Santander" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Santander</h3> 
+                     <p>Aventura y pueblos coloniales en el corazón de los Andes colombianos.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Tatacoa%20Desert%20Huila%20Colombia%2C%20red%20rock%20formations%2C%20sunset%2C%20cactus%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Huila" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Huila</h3> 
+                     <p>Descubre el Desierto de la Tatacoa, un paisaje de otro planeta.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+         </div> 
+  
+         <h3 class="destinations-subtitle">Destinos Internacionales</h3> 
+         <div class="grid-container"> 
+             <div class="card"> 
+                 <div class="europe-grid"> 
+                     <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Paris%20Eiffel%20Tower%2C%20France%2C%20high%20quality%20photography&image_size=square" alt="Paris"> 
+                     <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Rome%20Colosseum%2C%20Italy%2C%20high%20quality%20photography&image_size=square" alt="Roma"> 
+                     <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Madrid%20Spain%20architecture%2C%20high%20quality%20photography&image_size=square" alt="Madrid"> 
+                     <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Lisbon%20Portugal%20tram%2C%20high%20quality%20photography&image_size=square" alt="Lisboa"> 
+                 </div> 
+                 <div class="card-content"> 
+                     <h3>Europa</h3> 
+                     <p>Explora la cuna de la cultura occidental: París, Roma, Madrid, Lisboa y más.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Mexico%20Cancun%20beach%20resort%2C%20turquoise%20water%2C%20Mayan%20ruins%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="México" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>México</h3> 
+                     <p>Cultura, playas paradisíacas en Cancún y una gastronomía vibrante.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Dubai%20skyline%20Burj%20Khalifa%2C%20modern%20architecture%2C%20luxury%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Dubái" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Dubái</h3> 
+                     <p>Lujo, arquitectura futurista y experiencias exclusivas en el desierto.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Machu%20Picchu%20Peru%2C%20ancient%20Inca%20city%2C%20mountains%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Perú" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Perú</h3> 
+                     <p>Explora Machu Picchu y deléitate con la mejor gastronomía del mundo.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Thailand%20temples%20and%20beaches%2C%20Bangkok%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Tailandia" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Tailandia</h3> 
+                     <p>Templos exóticos, playas de ensueño y una cultura vibrante.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Cappadocia%20Turkey%20hot%20air%20balloons%2C%20sunset%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Turquía" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Turquía</h3> 
+                     <p>Vuela en globo en Capadocia y cruza el Bósforo en Estambul.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+         </div> 
+     </section> 
+  
+     <!-- Cruceros --> 
+     <section id="cruceros"> 
+         <h2 class="section-title">Nuestros Cruceros</h2> 
+         <div class="grid-container"> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Royal%20Caribbean%20cruise%20ship%20at%20sea%2C%20luxury%2C%20sunset%2C%20water%20slides%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Royal Caribbean" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Royal Caribbean</h3> 
+                     <p>Diversión sin límites y los barcos más grandes del mundo.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Disney%20Cruise%20Line%20ship%2C%20mickey%20mouse%20funnel%2C%20family%20vacation%2C%20ocean%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Disney Cruise Line" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Disney Cruise Line</h3> 
+                     <p>La magia de Disney en alta mar para toda la familia.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Celebrity%20Cruises%20ship%2C%20modern%20luxury%2C%20elegant%20design%2C%20ocean%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Celebrity Cruises" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Celebrity Cruises</h3> 
+                     <p>Lujo moderno y destinos excepcionales con el mejor servicio.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Silversea%20Cruises%20luxury%20small%20ship%2C%20exclusive%2C%20ocean%2C%20butler%20service%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="Silversea Cruises" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>Silversea Cruises</h3> 
+                     <p>Experiencias ultra-lujosas y destinos remotos exclusivos.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+             <div class="card"> 
+                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=AmaWaterways%20river%20cruise%20ship%2C%20Europe%20river%2C%20castles%2C%20luxury%2C%20high%20quality%20photography&image_size=landscape_16_9" alt="AmaWaterways" class="card-img"> 
+                 <div class="card-content"> 
+                     <h3>AmaWaterways</h3> 
+                     <p>Cruceros fluviales de lujo por los ríos más bellos del mundo.</p> 
+                     <a href="https://wa.me/573137634998" target="_blank" class="btn-small">Más Info</a> 
+                 </div> 
+             </div> 
+         </div> 
+     </section> 
+  
+     <!-- Contacto --> 
+     <section id="contacto"> 
+         <h2 class="section-title">Contáctanos</h2> 
+         <div class="contact-container"> 
+             <div class="contact-info"> 
+                 <h3>Carlos Quintero</h3> 
+                 <h4>Director Ejecutivo</h4> 
+                 <div class="contact-details"> 
+                     <p>📍 <strong>Ubicación:</strong> Barrio Los Libertadores, Tumaco</p> 
+                     <p>📞 <strong>Teléfono / WhatsApp:</strong> +57 313 763 4998</p> 
+                     <p>✉️ <strong>Correo:</strong> quintersjcsoluciones@gmail.com</p> 
+                 </div> 
+                 <br> 
+                 <a href="https://wa.me/573137634998" target="_blank" class="cta-button">Escríbenos por WhatsApp</a> 
+             </div> 
+         </div> 
+     </section> 
+  
+     <!-- Footer --> 
+     <footer> 
+         <p>&copy; 2026 Quinters Airlines - Agencia de Viajes. Gracias por confiar en nosotros, estamos para servirte.</p> 
+         <div class="developer-credits"> 
+            Desarrollado por <strong>Engenitix SAS</strong> - Andres Espinosa & Julian Vasquez | <a href="https://wa.me/573173687431" target="_blank">3173687431</a> 
+        </div> 
+     </footer> 
+  
+ </body> 
+ </html>
